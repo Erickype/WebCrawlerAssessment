@@ -1,0 +1,13 @@
+import requests
+from bs4 import BeautifulSoup
+
+def fetch_entries(limit: int = 30):
+    url = "https://news.ycombinator.com/"
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    rows = soup.select(".athing")[:limit]
+
+if __name__ == "__main__":
+    fetch_entries()
