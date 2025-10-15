@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 
 from crawler import fetch_entries
+from filters import filter_five_or_less, filter_more_than_five
 
 @st.cache_data(ttl=600)
 def get_data():
@@ -16,13 +17,26 @@ st.success(f"Fetched {len(entries)} entries from Hacker News!")
 option = st.radio(
     "Choose a filter:",
     [
+        "All",
         "More than five words (sorted by comments)",
         "Five or fewer words (sorted by points)",
     ],
+    index=0,
+    horizontal=True,
 )
 
+#Filters
+if "More than five" in option:
+    filtered = filter_more_than_five(entries)
+if "Five or fewer words" in option:
+    filtered = filter_five_or_less(entries)
+else:
+    filtered = entries
+
+st.success(f"Matching {len(filtered)}/{len(entries)} entries!")
+
 #Data table
-df = pd.DataFrame(entries)
+df = pd.DataFrame(filtered)
 
 st.data_editor(
     df,
