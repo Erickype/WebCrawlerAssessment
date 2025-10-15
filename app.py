@@ -33,7 +33,7 @@ with filterContainer:
         filtered = filter_more_than_five(entries)
     if "Five or fewer words" in option:
         filtered = filter_five_or_less(entries)
-    else:
+    if option == "All":
         filtered = entries
 
     st.badge(f"Matching {len(filtered)}/{len(entries)} entries!")
