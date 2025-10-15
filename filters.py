@@ -16,7 +16,15 @@ def filter_more_than_five(hacker_news_entries: list[HackerNewsEntry]) -> list[Ha
     )
 
 
+def filter_five_or_less(hacker_news_entries: list[HackerNewsEntry]) -> list[HackerNewsEntry]:
+    return sorted(
+        [e for e in hacker_news_entries if count_words(e.title) <= 5],
+        key=lambda e: e.points,
+        reverse=True,
+    )
+
 
 if __name__ == '__main__':
     entries = fetch_entries()
     print(filter_more_than_five(entries))
+    print(filter_five_or_less(entries))
