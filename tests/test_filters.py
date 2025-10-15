@@ -4,3 +4,15 @@ from models import HackerNewsEntry
 def test_count_words():
     assert count_words("This is - a self-explained example") == 5
     assert count_words("Hello, world!") == 2
+
+
+def test_filter_more_than_five():
+    entries = [
+        HackerNewsEntry(1, "Short title", 10, 2),
+        HackerNewsEntry(2, "This title has more than five words", 50, 15),
+        HackerNewsEntry(3, "More comments has more than five words", 50, 30),
+    ]
+    filtered = filter_more_than_five(entries)
+    assert len(filtered) == 2
+    assert filtered[0].title.startswith("More comments")
+
