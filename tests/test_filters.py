@@ -16,3 +16,13 @@ def test_filter_more_than_five():
     assert len(filtered) == 2
     assert filtered[0].title.startswith("More comments")
 
+
+def test_filter_five_or_less():
+    entries = [
+        HackerNewsEntry(1, "Short title", 10, 2),
+        HackerNewsEntry(2, "Another one", 30, 0),
+        HackerNewsEntry(3, "This title has more than five words", 50, 15),
+    ]
+    filtered = filter_five_or_less(entries)
+    assert len(filtered) == 2
+    assert filtered[0].title.startswith("Another one")
