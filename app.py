@@ -14,26 +14,29 @@ st.title("Web Crawler Assessment")
 entries = get_data()
 st.success(f"Fetched {len(entries)} entries from Hacker News!")
 
-option = st.radio(
-    "Choose a filter:",
-    [
-        "All",
-        "More than five words (sorted by comments)",
-        "Five or fewer words (sorted by points)",
-    ],
-    index=0,
-    horizontal=True,
-)
-
 #Filters
-if "More than five" in option:
-    filtered = filter_more_than_five(entries)
-if "Five or fewer words" in option:
-    filtered = filter_five_or_less(entries)
-else:
-    filtered = entries
+filterContainer = st.container(horizontal=True, horizontal_alignment="distribute")
 
-st.success(f"Matching {len(filtered)}/{len(entries)} entries!")
+with filterContainer:
+    option = st.radio(
+        "Choose a filter:",
+        [
+            "All",
+            "More than five words (sorted by comments)",
+            "Five or fewer words (sorted by points)",
+        ],
+        index=0,
+        horizontal=True,
+    )
+
+    if "More than five" in option:
+        filtered = filter_more_than_five(entries)
+    if "Five or fewer words" in option:
+        filtered = filter_five_or_less(entries)
+    else:
+        filtered = entries
+
+    st.badge(f"Matching {len(filtered)}/{len(entries)} entries!")
 
 #Data table
 df = pd.DataFrame(filtered)
